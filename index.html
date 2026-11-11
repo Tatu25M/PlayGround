@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="theme-color" content="#101510" />
+  <title>Crônicas de Eldoria — A Fronteira Selvagem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="game-shell">
+    <canvas id="world" aria-label="Mundo 3D de Eldoria"></canvas>
+    <div class="vignette"></div>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Crônicas de Eldoria"><span class="brand-mark">✦</span><span><b>ELDORIA</b><small>CRÔNICAS DA FRONTEIRA</small></span></a>
+      <div class="location"><span class="location-pin">⌖</span><span><b>VALE DE AURORA</b><small>FRONTEIRA DO REINO · DIA 04</small></span></div>
+      <div class="top-actions"><button class="icon-btn" id="soundBtn" title="Som">♫</button><button class="icon-btn" id="helpBtn" title="Controles">?</button><button class="icon-btn" id="pauseBtn" title="Pausar">Ⅱ</button></div>
+    </header>
+    <section class="hud-left">
+      <div class="character-card panel">
+        <div class="portrait"><span id="portraitInitial">A</span><i class="portrait-gem"></i></div>
+        <div class="character-meta"><div class="name-line"><b id="heroName">ARIN VESPER</b><span class="level">NV. <i id="level">03</i></span></div><div class="race-class" id="raceClass">ELFO · PATRULHEIRO</div>
+          <div class="meter-label"><span>♥ VITALIDADE</span><span id="healthText">100 / 100</span></div><div class="meter"><i id="healthBar"></i></div>
+          <div class="meter-label mana-label"><span>✧ ESSÊNCIA</span><span id="manaText">60 / 60</span></div><div class="meter mana"><i id="manaBar"></i></div>
+        </div>
+      </div>
+      <div class="quest-card panel"><div class="section-heading"><span class="quest-icon">✧</span><span>JORNADA ATUAL</span><button class="dots" id="questMore">···</button></div><h2 id="questTitle">Sombras na floresta</h2><p id="questDesc">Fale com a anciã Maelis na clareira.</p><div class="quest-progress"><span id="questProgress">0 / 1</span><div class="progress-line"><i id="questBar"></i></div></div><div class="reward-line"><span>RECOMPENSA</span><b>✦ 120 XP <i>·</i> ◈ 35</b></div></div>
+      <div class="companion-card panel"><div class="companion-avatar">🐺<span class="online-dot"></span></div><div class="companion-info"><b>LYRA</b><small>Loba-do-luar · companheira</small><div class="companion-hp"><i></i></div></div><span class="companion-heart">♥</span></div>
+    </section>
+    <section class="hud-right">
+      <div class="minimap panel"><div class="map-top"><span>✧ MAPA</span><button id="openMap">⤢</button></div><div class="map-view"><div class="map-river"></div><div class="map-path"></div><span class="map-tree t1">♠</span><span class="map-tree t2">♠</span><span class="map-tree t3">♠</span><span class="map-house">⌂</span><span class="map-marker">▲</span><span class="map-enemy">◆</span><span class="map-compass">N</span></div><div class="map-coords"><span>VALE DE AURORA</span><span id="coords">X 024 · Y 018</span></div></div>
+      <button class="objective panel" id="objectiveBtn"><span class="objective-icon">⌖</span><span><small>OBJETIVO PRÓXIMO</small><b id="objectiveText">Clareira da anciã</b></span><i>›</i></button>
+      <div class="world-hint" id="worldHint"><kbd>E</kbd> <span>INTERAGIR</span></div>
+    </section>
+    <div class="bottom-hud">
+      <div class="hotbar-label">ATALHOS <span>·</span> <kbd>1</kbd>—<kbd>4</kbd></div>
+      <div class="hotbar panel">
+        <button class="slot active" data-slot="1"><span class="slot-key">1</span><span class="slot-icon">⚔</span><small>Lâmina lunar</small></button>
+        <button class="slot" data-slot="2"><span class="slot-key">2</span><span class="slot-icon potion">♜</span><small>Poção vital</small><i class="slot-count">3</i></button>
+        <button class="slot" data-slot="3"><span class="slot-key">3</span><span class="slot-icon spell">✧</span><small>Flecha arcana</small><i class="slot-count">∞</i></button>
+        <button class="slot" data-slot="4"><span class="slot-key">4</span><span class="slot-icon mount">♞</span><small>Montaria</small></button>
+      </div>
+      <div class="quick-menu"><button data-panel="inventory"><span>▤</span><small>MOCHILA</small><kbd>I</kbd></button><button data-panel="character"><span>♙</span><small>PERSONAGEM</small><kbd>C</kbd></button><button data-panel="quests"><span>✧</span><small>MISSÕES</small><kbd>J</kbd></button><button data-panel="build"><span>⌂</span><small>CONSTRUIR</small><kbd>B</kbd></button></div>
+    </div>
+    <div id="toast" class="toast"></div>
+    <div id="interactionPrompt" class="interaction-prompt"><span class="interact-key">E</span><span id="interactLabel">Falar com Maelis</span></div>
+    <div id="combatFloaters"></div>
+    <div id="modalBackdrop" class="modal-backdrop hidden"><section class="game-modal panel" id="modalContent"></section></div>
+    <div class="dialogue hidden" id="dialogue"><div class="dialogue-portrait">☽</div><div class="dialogue-copy"><small id="dialogueRole">ANCIÃ DA FLORESTA</small><b id="dialogueName">MAELIS</b><p id="dialogueText"></p><button id="dialogueNext">CONTINUAR <span>↗</span></button></div></div>
+    <div class="mobile-controls"><button id="mountTouch">♞</button><div class="dpad"><button data-move="forward">▲</button><div><button data-move="left">◀</button><button data-move="back">▼</button><button data-move="right">▶</button></div></div><button id="attackTouch">⚔</button></div>
+    <div id="startOverlay" class="start-overlay"><div class="start-content"><div class="overline">✦ &nbsp; UM NOVO CAPÍTULO COMEÇA &nbsp; ✦</div><h1>CRÔNICAS<br><em>DE ELDORIA</em></h1><p>O reino está à beira da escuridão. Sua lenda começa aqui.</p><div class="start-rule"></div><button id="startBtn">ENTRAR NO REINO <span>↗</span></button><small>W A S D PARA MOVER &nbsp; · &nbsp; CLIQUE PARA ATACAR</small></div><div class="start-bottom">UM MUNDO ABERTO À SUA ESPERA <span>✦</span> EXPLORE · LUTE · CONSTRUA</div></div>
+  </main>
+  <script type="module" src="game.js"></script>
+</body>
+</html>
